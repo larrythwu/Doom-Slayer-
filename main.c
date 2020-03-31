@@ -5593,6 +5593,7 @@ void PS2_ISR();
 // Define the IRQ exception handler
 void __attribute__ ((interrupt)) __cs3_isr_irq (void)
 {
+    printf("Entered __cs3_isr_irq\n");
     // Read the ICCIAR from the processor interface
     int address = MPCORE_GIC_CPUIF + ICCIAR;
     int int_ID = *((int *) address);
@@ -5640,6 +5641,8 @@ void __attribute__((interrupt)) __cs3_isr_fiq(void) {
 
 void set_A9_IRQ_stack(void)
 {
+    printf("Entered  set_A9_IRQ_stack\n");
+
     int stack, mode;
     stack = A9_ONCHIP_END - 7;		// top of A9 onchip memory, aligned to 8 bytes
     /* change processor to IRQ mode with interrupts disabled */
@@ -5658,6 +5661,7 @@ void set_A9_IRQ_stack(void)
 */
 void enable_A9_interrupts(void)
 {
+   printf("Entered enable_A9_interrupts\n");
     int status = SVC_MODE | INT_ENABLE;
     asm("msr cpsr,%[ps]" : : [ps]"r"(status));
 }
@@ -5667,6 +5671,7 @@ void enable_A9_interrupts(void)
 */
 void config_GIC(void)
 {
+   printf("Entered config_GIC\n");
     int address;	// used to calculate register addresses
 
     /* enable some examples of interrupts */
@@ -5692,6 +5697,7 @@ void config_KEYs() {
 }
 /* setup the PS/2 interrupts */
 void config_PS2() {
+    printf("Entered config_PS2\n");
     volatile int * PS2_ptr = (int *)PS2_BASE; // PS/2 port address
 
     *(PS2_ptr) = 0xFF; /* reset */
@@ -5709,17 +5715,20 @@ void pushbutton_ISR(void) {
 
 
 void PS2_ISR(void) {
+  printf("Entered PS2_ISR\n");
     volatile int * PS2_ptr = (int *) 0xFF200100;		// PS/2 port address
     int PS2_data, RAVAIL;
 
     PS2_data = *(PS2_ptr);									// read the Data register in the PS/2 port
     RAVAIL = (PS2_data & 0xFFFF0000) >> 16;			// extract the RAVAIL field
-    if (RAVAIL > 0)
-    {
+    //if (RAVAIL > 0)
+    //{
         /* always save the last three bytes received */
         byte1 = byte2;
         byte2 = byte3;
-        byte3 = PS2_data & 0xFF;
+        byte3 = PS2_data;
+        printf("byte1: %d, byte2: %d, byte3: %d\n", byte1, byte2, byte3);
+
         if ((byte2 == (char) 0xE0) && (byte3 == (char) 0x75)) {
             KEYBOARD_UP = true;
         } else if((byte2 == (char) 0xE0) && (byte3 == (char) 0x72)){
@@ -5731,7 +5740,7 @@ void PS2_ISR(void) {
         } else if((byte2 == (char) 0xE0) && (byte3 == (char) 0x69)){
             KEYBOARD_RESTART = true;
         }
-    }
+  //  }
 }
 
 /*
@@ -5778,50 +5787,36 @@ int main(void){
     set_A9_IRQ_stack();
     config_GIC();
     config_KEYs();
-    config_PS2();
+    config_PS2();//////
     enable_A9_interrupts();
 
     volatile int * pixel_ctrl_ptr = (int *)0xFF203020;
-
-    // declare other variables
-    struct point* P1;
-    struct point* P2;
-    struct point pp1;
-    struct point pp2;
-    P1 =&pp1;
-    P2= &pp2;
-    // initialize location and direction of rectangles(not shown)
-    initialize(P1,P2);
-    /* set front pixel buffer to start of FPGA On-chip memory */
-    *(pixel_ctrl_ptr + 1) = 0xC8000000; // first store the address in the
-                                        // back buffer
+    /* Read location of the pixel buffer from the pixel buffer controller */
+    pixel_buffer_start = *pixel_ctrl_ptr;
 
     /* now, swap the front/back buffers, to set the front buffer location */
     wait_for_vsync();
-
     /* initialize a pointer to the pixel buffer, used by drawing functions */
     pixel_buffer_start = *pixel_ctrl_ptr;
     clear_screen(); // pixel_buffer_start points to the pixel buffer
+
     /* set back pixel buffer to start of SDRAM memory */
     *(pixel_ctrl_ptr + 1) = 0xC0000000;
     pixel_buffer_start = *(pixel_ctrl_ptr + 1); // we draw on the back buffer
 
-    while (1)
-    {
-        /* Erase any boxes and lines that were drawn in the last iteration */
-        clear_screen();
-        draw_background();
-        draw_platform(100,100);
-        // code for drawing the boxes and lines
-        draw_characters(P1,P2);
+    while(1){
+		if(KEYBOARD_UP){
+      printf("\nUPPPPPPP\n");
+    	clear_screen();
+    	draw_background();
+      draw_platform(100,100);
+		}
 
-        // code for updating the locations of boxes
-        update(P1,P2);
-        wait_for_vsync(); // swap front and back buffers on VGA vertical sync
-        pixel_buffer_start = *(pixel_ctrl_ptr + 1); // new back buffer
-    }
-    if(KEYBOARD_UP == true)
-      printf("Hello");
+    	wait_for_vsync(); // swap front and back buffers on VGA vertical sync
+    	pixel_buffer_start = *(pixel_ctrl_ptr + 1); // new back buffer
+	}
+
+
 }
 
 /////////////Implementations/////////////
