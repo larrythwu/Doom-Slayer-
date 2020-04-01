@@ -1,2 +1,2 @@
 # Doom Slayer
-Game written in C displayed on a VGA, inspired by DOOM
+Game written in C, inspired by DOOM. Displayed on a VGA, controlled using De1_SoC.
