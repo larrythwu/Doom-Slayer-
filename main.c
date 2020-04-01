@@ -10187,6 +10187,33 @@ const unsigned short platform[960] ={
 0x0800, 0x0000, 0x1861, 0x28C1, 0x48E0, 0x8A42, 0xCB24, 0xCA80, 0xE2A1, 0xDA60, 0xDA40, 0xD261, 0xB1E0, 0x6020, 0x3000, 0x1800,   // 0x03B0 (944) pixels
 0x0840, 0x0000, 0x1061, 0x2080, 0x40A0, 0x9243, 0xC303, 0xDAE2, 0xE301, 0xE300, 0xDAE0, 0xDB21, 0xCAC1, 0x80E0, 0x4000, 0x3000,   // 0x03C0 (960) pixels
 };
+const unsigned short blood[400] = {
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0010 (16) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFF7D, 0xFF7D, 0xFFDE,   // 0x0020 (32) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFBE,   // 0x0030 (48) pixels
+0xFFBD, 0xC46F, 0xCC6F, 0xFF9D, 0xFFBE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0040 (64) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFBE, 0xFE57, 0xA1E4, 0xA1E4, 0xFE57, 0xFFBE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0050 (80) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDF, 0xFF9D, 0xD32A, 0xB962, 0xB961, 0xD329, 0xFF9D, 0xFFDF, 0xFFFF, 0xFFFF,   // 0x0060 (96) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFFBE, 0xFD94, 0xB162, 0xD961, 0xD961, 0xB162,   // 0x0070 (112) pixels
+0xFD94, 0xFFBE, 0xFFDE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFF5B, 0xBAA8,   // 0x0080 (128) pixels
+0xC161, 0xD960, 0xD960, 0xC161, 0xBAA7, 0xFF5B, 0xFFDE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0090 (144) pixels
+0xFFDE, 0xFFBD, 0xFCF1, 0xB161, 0xD181, 0xD940, 0xD940, 0xD181, 0xB161, 0xFCF1, 0xFFBD, 0xFFDF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x00A0 (160) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFF5B, 0xC266, 0xC941, 0xD960, 0xD940, 0xD940, 0xD960, 0xC941, 0xC266, 0xFF5B, 0xFFFF,   // 0x00B0 (176) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFFDE, 0xED32, 0xB941, 0xD960, 0xD960, 0xD940, 0xD940, 0xD940,   // 0x00C0 (192) pixels
+0xD960, 0xB941, 0xED33, 0xFFBE, 0xFFDF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFF9C, 0xC309, 0xC161, 0xD960,   // 0x00D0 (208) pixels
+0xD940, 0xD940, 0xD940, 0xD940, 0xD960, 0xC161, 0xC309, 0xFF9C, 0xFFDE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE,   // 0x00E0 (224) pixels
+0xFE57, 0xA9C4, 0xC182, 0xD161, 0xD160, 0xD960, 0xD940, 0xD940, 0xD940, 0xC981, 0xA9C4, 0xFE57, 0xFFDE, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x00F0 (240) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFBE, 0xFD33, 0xA163, 0xCAA7, 0xFD31, 0xE224, 0xD140, 0xD960, 0xD940, 0xD940, 0xD181, 0xB162, 0xFD32,   // 0x0100 (256) pixels
+0xFFBE, 0xFFDF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDF, 0xFFBE, 0xFD33, 0xA143, 0xD329, 0xFE76, 0xF38A, 0xB120, 0xC941, 0xD960,   // 0x0110 (272) pixels
+0xD960, 0xD181, 0xB162, 0xFD33, 0xFFBE, 0xFFDF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFE57, 0xA1C4, 0xB9E4, 0xFD51,   // 0x0120 (288) pixels
+0xFE15, 0xEC0C, 0xDA86, 0xC961, 0xD960, 0xC982, 0xA9A4, 0xFE57, 0xFFDE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE,   // 0x0130 (304) pixels
+0xFF9D, 0xC36B, 0xA162, 0xD286, 0xFD52, 0xFE76, 0xFCAF, 0xC941, 0xD182, 0xB161, 0xC34B, 0xFF9D, 0xFFDE, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0140 (320) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDE, 0xFED9, 0xB247, 0xA941, 0xC1A3, 0xE265, 0xE1E3, 0xD161, 0xB941, 0xBA46, 0xFEB9, 0xFFDE,   // 0x0150 (336) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFBE, 0xFEB9, 0xD36B, 0xB1C4, 0xB141, 0xB141, 0xB1A3,   // 0x0160 (352) pixels
+0xD36A, 0xFEB8, 0xFFBE, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFDF, 0xFFBE, 0xFFBD,   // 0x0170 (368) pixels
+0xFEB9, 0xF5F6, 0xF5D5, 0xFED9, 0xFFBD, 0xFFBE, 0xFFDF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0180 (384) pixels
+0xFFFF, 0xFFFF, 0xFFFF, 0xFFDF, 0xFFDF, 0xFFDE, 0xFFDE, 0xFFDF, 0xFFDF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,   // 0x0190 (400) pixels
+};
 
 /////////////Memory Address/////////////
 #define    INTERVAL_TIMER_IRQ                72
@@ -10320,14 +10347,17 @@ struct point{
     int dy;
     bool fire;
     bool jump;
-    int hearts;
+    int health;
     bool face_right;
     bool face_left;
     int fire_dx;
 };
-    struct node {
+
+struct node {
     int x;
     int y;
+    int dx;
+    int dy;
     short color;
 };
 
@@ -10338,8 +10368,10 @@ bool KEYBOARD_DOWN=false;
 bool KEYBOARD_LEFT=false;
 bool KEYBOARD_RIGHT=false;
 bool KEYBOARD_RESTART=false;
-volatile int pixel_buffer_start; // global variable
+volatile int pixel_buffer_start;
 bool startGame = false;
+int bullet_number_P1 = 0;
+int bullet_number_P2= 0;
 
 /////////////Function Prototypes/////////////
 void swap(int *x, int *y);
@@ -10357,38 +10389,26 @@ void draw_bullet(struct point* P1,struct point* P2,struct node bullet1[],struct 
 void update_bullet(struct node box[], struct point* P,int number);
 void initialize_bullet(struct node box[],struct point* P,int number);
 void drawStartPage();
+void drawHeart();
 
-#define NUM_POINTS 8
-
-/////////////New/////////////
-//#ifndef REFURBSOUP_INTERRUPT_H
-//#define REFURBSOUP_INTERRUPT_H
-//#include "interrupt_ID.h"
-//#include "defines.h"
-//#include "address_map_arm.h"
-
+/////////////PS2 Interrupt/////////////
 volatile int key_dir;
 volatile int pattern;
+volatile int *LEDR_ptr;
+volatile int *SW_ptr;
+volatile int *KEY_EDGE_ptr;
+volatile char *character_buffer;
+volatile int *pixel_ctrl_ptr;
 
-
-
- volatile int *LEDR_ptr;
- volatile int *SW_ptr;
- volatile int *KEY_EDGE_ptr;
- volatile char *character_buffer;
- volatile int *pixel_ctrl_ptr;
-
- bool KEYBOARD_UP;
- bool KEYBOARD_DOWN;
- bool KEYBOARD_LEFT;
- bool KEYBOARD_RIGHT;
- bool KEYBOARD_RESTART;
- bool KEYBOARD_W;
- bool KEYBOARD_S;
- bool KEYBOARD_D;
- bool KEYBOARD_A;
- bool KEYBOARD_SPACE;
- bool KEYBOARD_L;
+bool KEYBOARD_UP;
+bool KEYBOARD_LEFT;
+bool KEYBOARD_RIGHT;
+bool KEYBOARD_RESTART;
+bool KEYBOARD_W;
+bool KEYBOARD_D;
+bool KEYBOARD_A;
+bool KEYBOARD_SPACE;
+bool KEYBOARD_L;
 
 unsigned char byte1;
 unsigned char byte2;
@@ -10552,8 +10572,6 @@ void PS2_ISR(void) {
 
         if ((byte2 == (char) 0xE0) && (byte3 == (char) 0x75)) {
             KEYBOARD_UP = true;
-        } else if((byte2 == (char) 0xE0) && (byte3 == (char) 0x72)){
-            KEYBOARD_DOWN = true;
         } else if((byte2 == (char) 0xE0) && (byte3 == (char) 0x6B)){
             KEYBOARD_LEFT = true;
         } else if((byte2 == (char) 0xE0) && (byte3 == (char) 0x74)){
@@ -10563,9 +10581,6 @@ void PS2_ISR(void) {
         }
         else if((byte2 == (char) 0xF0) && (byte3 == (char) 0x1D)){
             KEYBOARD_W = true;
-        }
-        else if((byte2 == (char) 0xF0) && (byte3 == (char) 0x1B)){
-            KEYBOARD_S = true;
         }
         else if((byte2 == (char) 0xF0) && (byte3 == (char) 0x1C)){
             KEYBOARD_A = true;
@@ -10619,9 +10634,9 @@ void hw_write_bits(volatile int * addr, volatile int unmask, volatile int value)
     *addr = ((~unmask) & *addr) | value;
 }
 
-/////////////////////////////
-int bullet_number_P1 = 0;
-int bullet_number_P2= 0;
+/////////////End of Interrupt/////////////
+
+/////////////Main/////////////
 int main(void)
 {
     set_A9_IRQ_stack();
@@ -10640,6 +10655,7 @@ int main(void)
 
     struct node bullet1[100];
     struct node bullet2[100];
+
     // initialize location and direction of rectangles(not shown)
     initialize(P1,P2);
     /* set front pixel buffer to start of FPGA On-chip memory */
@@ -10658,29 +10674,38 @@ int main(void)
       if(startGame == false)
         drawStartPage();
       else{
-        /* Erase any boxes and lines that were drawn in the last iteration */
-        clear_screen();
+        //clear_screen();
         draw_background();
-        draw_platform(100,100);
-        // code for drawing the boxes and lines
-        // code for updating the locations of boxes
+
+        draw_platform(0,80);
+        draw_platform(240,80);
+        draw_platform(120,150);
+
         update(P1,P2);
         draw_characters(P1,P2);
+        drawHeart(P1->health, P2->health);
 
-        // draw_bullet(P1,P2,bullet1,bullet2);
-        // if (bullet_number_P1>1){
-        // initialize_bullet(bullet1,P1,bullet_number_P1);
-        // draw_boxes(bullet1,P1,bullet_number_P1);
-        //     update_bullet(bullet1,P1,bullet_number_P1);
-        //
-        // }
-        // if (bullet_number_P2>1){
-        // initialize_bullet(bullet2,P2,bullet_number_P2);
-        // draw_boxes(bullet2,P2,bullet_number_P2);
-        // update_bullet(bullet2,P2,bullet_number_P2);
-        // }
-        // P1->fire = false;
-        // P2->fire = false;
+          if (P1->jump ==true){
+              P1->y += P1->dy;
+              P1->jump =false;
+          }
+          if (P2->jump ==true){
+              P2->y += P2->dy;
+              P2->jump =false;
+          }
+        draw_bullet(P1,P2,bullet1,bullet2);
+        if (bullet_number_P1>=1){
+          initialize_bullet(bullet1, P1, bullet_number_P1);
+          draw_boxes(bullet1, P1, bullet_number_P1);
+          update_bullet(bullet1, P1, bullet_number_P1);
+        }
+        if (bullet_number_P2>=1){
+          initialize_bullet(bullet2,P2,bullet_number_P2);
+          draw_boxes(bullet2,P2,bullet_number_P2);
+          update_bullet(bullet2,P2,bullet_number_P2);
+        }
+        P1->fire = false;
+        P2->fire = false;
       }
         wait_for_vsync(); // swap front and back buffers on VGA vertical sync
         pixel_buffer_start = *(pixel_ctrl_ptr + 1); // new back buffer
@@ -10688,9 +10713,7 @@ int main(void)
 }
 
 
-
-
-
+/////////////Implementation/////////////
 void initialize (struct point* P1, struct point* P2){
     P1->x = 64;
     P1->y = 192;
@@ -10700,12 +10723,16 @@ void initialize (struct point* P1, struct point* P2){
     P1->dy = 16;
     P2->dx = 16;
     P2->dy = 16;
-    P1->fire_dx=32;
-    P2->fire_dx=32;
+    P1->fire_dx=30;
+    P2->fire_dx=30;
     P1->face_left=false;
     P1->face_right=true;
     P2->face_right=false;
     P2->face_left=true;
+    P1->jump = false;
+    P2->jump = false;
+    P1->health = 3;
+    P2->health = 3;
 }
 
 void draw_characters(struct point* P1, struct point* P2){
@@ -10725,66 +10752,103 @@ void draw_characters(struct point* P1, struct point* P2){
         if (P2->x>=32&&P2->x<=288&&P2->y>=32&&P2->y<=208&&player2[j * 64 + i] != 0x0000)
             plot_pixel(left_corner_x2+i, left_corner_y2+j, player2[j * 64 + i]);
         }
-    }}
+    }
+  }
+
+//Take in player A,B's health and draw the corresponding number of blood on screen
+void drawHeart(int A, int B){
+  //printf("Entered drawHeart\n");
+  for(int heartCount = 0; heartCount < A; heartCount++){
+    for (int i=0; i<20; ++i) {
+      for (int j=0; j<20; ++j) {
+        if(blood[j*20+i] < 0xFF00)
+            plot_pixel(0+heartCount*20+i, 0+j, blood[j * 20 + i]);
+        }
+    }
+  }
+
+  for(int heartCount = 0; heartCount < B; heartCount++){
+    for (int i=0; i<20; ++i) {
+      for (int j=0; j<20; ++j) {
+        if(blood[j*20+i] < 0xFF00)
+            plot_pixel(320-heartCount*20-i, 0+j, blood[j * 20 + i]);
+        }
+    }
+  }
+}
 
 void update(struct point* P1, struct point* P2){
-    if (P1->x >= 32 && P1->x <= 288 && P1->y >= 32 && P1->y <= 208){
+    if (P1->x>=32&&P1->x<=288&&P1->y>=32&&P1->y<=208){
         if (KEYBOARD_A){
-          P1->x -= P1->dx;
-          P1->face_left =true;
-          P1->face_right =false;
+        P1->x -= P1->dx;
+        P1->face_left =true;
+        P1->face_right =false;
         }
-        else if(KEYBOARD_D){
-          P1->x += P1->dx;
-          P1->face_right =true;
-          P1->face_left =false;
+    else if(KEYBOARD_D){
+        P1->x += P1->dx;
+        P1->face_right =true;
+        P1->face_left =false;
     }
-      else if (KEYBOARD_W)
-          P1->y -= P1->dy;
-      else if (KEYBOARD_S)
-          P1->y += P1->dy;
+    else if (KEYBOARD_W){
+        P1->y -= P1->dy;
+        P1->jump = true;
     }
-
+    else{
+        P1->x += 0;
+        P1->y += 0;
+        }
+    }
+    else{
+    P1->x += 0;
+    P1->y += 0;
+    }
     if (P2->x>=32&&P2->x<=288&&P2->y>=32&&P2->y<=208){
         if (KEYBOARD_LEFT){
-          P2->x -= P2->dx;
-          P2->face_left =true;
-          P2->face_right =false;
+        P2->x -= P2->dx;
+        P2->face_left =true;
+        P2->face_right =false;
         }
-        else if(KEYBOARD_RIGHT){
-          P2->x += P2->dx;
-          P2->face_right =true;
-          P2->face_left =false;
-      }
-        else if (KEYBOARD_UP)
-          P2->y -= P2->dy;
-        else if (KEYBOARD_DOWN)
-          P2->y += P2->dy;
+    else if(KEYBOARD_RIGHT){
+        P2->x += P2->dx;
+        P2->face_right =true;
+        P2->face_left =false;
     }
+    else if (KEYBOARD_UP){
+        P2->y -= P2->dy;
+        P2->jump = true;
+    }
+    else{
+        P2->x += 0;
+        P2->y += 0;
+        }
+    }
+    else{
+    P2->x += 0;
+    P2->y += 0;
+    }
+
 
     if(KEYBOARD_SPACE){
         P1->fire = true;
-        printf("Yes");
     }
 
     if(KEYBOARD_L){
         P2->fire = true;
     }
 
+
      KEYBOARD_UP = false;
-     KEYBOARD_DOWN= false;
      KEYBOARD_LEFT= false;
      KEYBOARD_RIGHT= false;
      KEYBOARD_RESTART= false;
      KEYBOARD_W= false;
-     KEYBOARD_S= false;
      KEYBOARD_D= false;
      KEYBOARD_A= false;
      KEYBOARD_SPACE= false;
      KEYBOARD_L= false;
+
+
 }
-
-
 
 void wait_for_vsync() {
     volatile int * pixel_ctrl_ptr = (int *)0xFF203020; // Buffer register
@@ -10811,7 +10875,6 @@ void clear_screen() {
         for (y = 0; y < 240; y++)
             plot_pixel(x, y, 0x0000);
 }
-
 
 void draw_line (int x0, int y0, int x1, int y1, short int color) {
     bool is_steep = abs(y1 - y0) > abs (x1 -x0);
@@ -10849,8 +10912,7 @@ void draw_line (int x0, int y0, int x1, int y1, short int color) {
     }
 }
 
-void plot_pixel(int x, int y, short int line_color)
-{
+void plot_pixel(int x, int y, short int line_color){
     *(short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = line_color;
 }
 
@@ -10879,14 +10941,11 @@ void draw_platform(int xPos, int yPos){
             plot_pixel(x+xPos, y+yPos, platform[y*80 + x]);
 }
 
-
-
-
 void draw_boxes(struct node box[], struct point* P,int number){
-    int width = 12;
+    int width = 2;
     for (int i = 0; i < number; i++){
-     for (int x = box[i].x-width; x <= box[i].x+width; x++) {
-        for (int y = box[i].y-width; y <= box[i].y+width; y++) {
+     for (int x = box[i].x-width; x < box[i].x+width; x++) {
+        for (int y = box[i].y-width; y < box[i].y+width; y++) {
             if(x>=0&&x<=318&&y>=0&&y<=238) {
                 plot_pixel(x, y, 0xFFFF);
             }
@@ -10895,33 +10954,36 @@ void draw_boxes(struct node box[], struct point* P,int number){
     }
 }
 
-
-
-void update_bullet(struct node box[], struct point* P,int number) {
+void update_bullet(struct node box[], struct point* P, int number) {
      for (int i = 0; i < number; i++){
-         box[i].x += P->fire_dx;
+         box[i].x += box[i].dx;
      }
 }
 
-
 void initialize_bullet(struct node box[],struct point* P,int number) {
-    box[number-1].x= P->x+16;
-    box[number-1].y=P->y;
+    box[number-1].x = P->x+16;
+    box[number-1].y = P->y;
+    box[number-1].dx = P->fire_dx;
 }
 
 void draw_bullet(struct point* P1,struct point* P2,struct node bullet1[],struct node bullet2[]){
-    printf("draw bullet%n");
     if (P1->fire == true){
-         bullet_number_P1+=1+bullet_number_P2 ;
-        printf("%d",bullet_number_P1);
-            if (P1->face_left){
+         bullet_number_P1 =1+bullet_number_P1 ;
+         printf("%d",bullet_number_P1);
+            if (P1->face_left &&P1->fire_dx>0 ){
                 P1->fire_dx = - P1->fire_dx;
             }
+        if (P1->face_right&& P1->fire_dx<0 ){
+            P1->fire_dx = - P1->fire_dx;
+        }
     }
     if (P2->fire == true){
         bullet_number_P2 =1+bullet_number_P2 ;
-            if (P2->face_left){
+            if (P2->face_left&& P2->fire_dx>0 ){
                 P2->fire_dx = - P2->fire_dx;
             }
+         if (P2->face_right&& P2->fire_dx<0 ){
+                       P2->fire_dx = - P2->fire_dx;
+                   }
     }
 }
