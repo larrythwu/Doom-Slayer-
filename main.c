@@ -11210,6 +11210,7 @@ int main(void)
     draw_background();
 
     while (1){
+        //Previous position of the characters, used for clearing
         struct point prevP1 = *P1;
         struct point prevP2 = *P2;
 
@@ -11221,77 +11222,88 @@ int main(void)
         draw_platform(120,150);
         drawHeart(P1->health, P2->health);
 
-
-
         //This is jump up
-        if (P1->jump == true){
-          if(P1->y - 14 >= 0)
+        if (P1->jump == true && P1->falling == false){
+          //if within the screen
+          if(P1->y-32 - 14 >= 0){
             P1->y -= 14;
-          else
-            P1->jump =false;
-
-          jumpParameter1--;
-            if(jumpParameter1 <= 0)
+            jumpParameter1--;
+            //reached the top
+            if(jumpParameter1 == 0){
               P1->jump =false;
-        }
-        if (P2->jump == true){
-          if(P2->y - 14 >= 0)
-            P2->y -= 14;
-          else
-            P2->jump =false;
-
-            jumpParameter2--;
-            if(jumpParameter2 <= 0)
-              P2->jump =false;
-        }
-
-        //falling action that follows jump and also check if the player jumped to a platform
-        //in which case stop the falling, and assign variables acordingly
-        if((P1->y + 32) == 150 && P1->x >= 120 && P1->x <= 200){
-          P1->onPlatform = true;
-          P1->falling = false;
-        }
-        else if(P1->jump == false && P1->onPlatform == true ){
-          jumpParameter1 = 6;
-          P1->onPlatform = false;
-          P1-> falling = true;
-        }
-        else if (P1->jump == false && jumpParameter1 != 6){
-            P1->y += 14;
-            jumpParameter1++;
-        }
-
-        if((P2->y + 32) == 150 && P2->x >= 120 && P2->x <= 200){
-          P2->onPlatform = true;
-          P2->falling = false;
-        }
-        else if(P2->jump == false && P2->onPlatform == true ){
-          jumpParameter2 = 6;
-          P2->onPlatform = false;
-          P2-> falling = true;
-        }
-        else if (P2->jump == false && jumpParameter2 != 6){
-            P2->y += 14;
-            jumpParameter2++;
-        }
-
-
-        //for the falling action, when a player steps outside of the platform
-        if(P1->falling == true){
-          if(P1->y >= 188){
-            P1->falling = false;
+              jumpParameter1 = 6;
+              P1->falling = true;
+            }
           }
           else
+            P1->jump =false;
+        }
+        if (P2->jump == true && P2->falling == false){
+          //if within the screen
+          if(P2->y-32 -14 >= 0){
+            P2->y -= 14;
+            jumpParameter2--;
+            //reached the top
+            if(jumpParameter2 == 0){
+              P2->jump =false;
+              jumpParameter2 = 6;
+              P2->falling = true;
+            }
+          }
+          else
+            P2->jump =false;
+        }
+
+        //Check if the player landed on one of the platforms
+
+        //Platform 1
+        if((P1->y + 32) == 150 && P1->x >= 120 && P1->x <= 200){
+          P1->falling = false;
+        }
+        //Platform 2
+        else if((P1->y + 32) == 80 && P1->x >= 0 && P1->x <= 80){
+          P1->falling = false;
+        }
+        //Platform 3
+        else if((P1->y + 32) == 80 && P1->x >= 240 && P1->x <= 320){
+          P1->falling = false;
+        }
+        //if not in the action of jumping, then fall
+        else if(P1->jump == false){
+            P1-> falling = true;
+        }
+
+        //Platform 1
+        if((P2->y + 32) == 150 && P2->x >= 120 && P2->x <= 200){
+          P2->falling = false;
+        }
+        //Platform 2
+        else if((P2->y + 32) == 80 && P2->x >= 0 && P2->x <= 80){
+          P2->falling = false;
+        }
+        //Platform 3
+        else if((P2->y + 32) == 80 && P2->x >= 240 && P2->x <= 320){
+          P2->falling = false;
+        }
+        //if not in the action of jumping, then fall
+        else if(P2->jump == false){
+            P2-> falling = true;
+        }
+
+        //for the falling action
+        if(P1->falling == true && P1->jump == false){
+          //188 is ground, if haven't hit the gound then keep falling
+          if(P1->y >= 188)
+            P1->falling = false;
+          else
             P1->y += 14;
         }
-        if(P2->falling == true){
+        if(P2->falling == true && P2->jump == false){
           if(P2->y >= 188)
               P2->falling = false;
           else
             P2->y += 14;
         }
-
-
 
         draw_characters(P1,P2);
 
@@ -11448,6 +11460,8 @@ void update(struct point* P1, struct point* P2){
         P1->face_left = false;
     }
     else if (KEYBOARD_W){
+      //one can only jump after landed
+      if(P1->falling == false)
         P1->jump = true;
     }
     else{
@@ -11471,6 +11485,7 @@ void update(struct point* P1, struct point* P2){
         P2->face_left =false;
     }
     else if (KEYBOARD_UP){
+      if(P2->falling == false)
         P2->jump = true;
     }
     else{
@@ -11604,7 +11619,7 @@ void draw_bullet(struct point* P1,struct point* P2,struct node bullet1[],struct 
             }
          if (P2->face_right&& P2->fire_dx<0 ){
                        P2->fire_dx = - P2->fire_dx;
-                   }
+            }
     }
 }
 
