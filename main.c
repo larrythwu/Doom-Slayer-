@@ -10870,6 +10870,8 @@ struct point{
     bool face_right;
     bool face_left;
     int fire_dx;
+    bool falling;
+    bool onPlatform;
 };
 
 struct node {
@@ -10911,6 +10913,7 @@ void drawStartPage();
 void drawHeart();
 void get_hitted(struct node box[],struct point* P,int number);
 void clear_characters(struct point* P1, struct point* P2);
+void clear_boxes(struct node box[], struct point* P,int number);
 /////////////PS2 Interrupt/////////////
 volatile int key_dir;
 volatile int pattern;
@@ -10953,7 +10956,7 @@ void PS2_ISR();
 // Define the IRQ exception handler
 void __attribute__ ((interrupt)) __cs3_isr_irq (void)
 {
-    printf("Entered __cs3_isr_irq\n");
+    //printf("Entered __cs3_isr_irq\n");
     // Read the ICCIAR from the processor interface
     int address = MPCORE_GIC_CPUIF + ICCIAR;
     int int_ID = *((int *) address);
@@ -11001,7 +11004,7 @@ void __attribute__((interrupt)) __cs3_isr_fiq(void) {
 
 void set_A9_IRQ_stack(void)
 {
-    printf("Entered  set_A9_IRQ_stack\n");
+    //printf("Entered  set_A9_IRQ_stack\n");
 
     int stack, mode;
     stack = A9_ONCHIP_END - 7;        // top of A9 onchip memory, aligned to 8 bytes
@@ -11021,7 +11024,7 @@ void set_A9_IRQ_stack(void)
 */
 void enable_A9_interrupts(void)
 {
-   printf("Entered enable_A9_interrupts\n");
+   //printf("Entered enable_A9_interrupts\n");
     int status = SVC_MODE | INT_ENABLE;
     asm("msr cpsr,%[ps]" : : [ps]"r"(status));
 }
@@ -11031,7 +11034,7 @@ void enable_A9_interrupts(void)
 */
 void config_GIC(void)
 {
-   printf("Entered config_GIC\n");
+   //printf("Entered config_GIC\n");
     int address;    // used to calculate register addresses
 
     /* enable some examples of interrupts */
@@ -11057,7 +11060,7 @@ void config_KEYs() {
 }
 /* setup the PS/2 interrupts */
 void config_PS2() {
-    printf("Entered config_PS2\n");
+    //printf("Entered config_PS2\n");
     volatile int * PS2_ptr = (int *)PS2_BASE; // PS/2 port address
 
     *(PS2_ptr) = 0xFF; /* reset */
@@ -11086,7 +11089,7 @@ void PS2_ISR(void) {
         byte1 = byte2;
         byte2 = byte3;
         byte3 = PS2_data;
-        printf("byte1: %d, byte2: %d, byte3: %d\n", byte1, byte2, byte3);
+        //printf("byte1: %d, byte2: %d, byte3: %d\n", byte1, byte2, byte3);
         if(byte3 != 170 && byte3 != 250)
           startGame = true;
 
@@ -11157,8 +11160,10 @@ void hw_write_bits(volatile int * addr, volatile int unmask, volatile int value)
 /////////////End of Interrupt/////////////
 
 /////////////Main/////////////
-int jumpParameter1 = 5;
-int jumpParameter2 = 5;
+int jumpParameter1 = 6;
+int jumpParameter2 = 6;
+int bulletParameter1 = 5;
+int bulletParameter2 = 5;
 
 int main(void)
 {
@@ -11176,6 +11181,8 @@ int main(void)
     P1 =&pp1;
     P2= &pp2;
 
+    int round1 =1;
+    int round2 =1;
     struct node bullet1[100];
     struct node bullet2[100];
 
@@ -11197,67 +11204,121 @@ int main(void)
  //   if(startGame == false)
 //      drawStartPage();
 
-        draw_background();
-        wait_for_vsync(); // swap front and back buffers on VGA vertical sync
-        pixel_buffer_start = *(pixel_ctrl_ptr + 1); // new back buffer
-        draw_background();
+    draw_background();
+    wait_for_vsync(); // swap front and back buffers on VGA vertical sync
+    pixel_buffer_start = *(pixel_ctrl_ptr + 1); // new back buffer
+    draw_background();
 
     while (1){
         struct point prevP1 = *P1;
         struct point prevP2 = *P2;
 
         update(P1,P2);
+        update_bullet(bullet1,P1,bullet_number_P1);
+        update_bullet(bullet2,P2,bullet_number_P2);
         draw_platform(0,80);
         draw_platform(240,80);
         draw_platform(120,150);
         drawHeart(P1->health, P2->health);
 
 
+
         //This is jump up
         if (P1->jump == true){
-            P1->y -= 20;
-            jumpParameter1--;
-            if(jumpParameter1 == 0)
+          if(P1->y - 14 >= 0)
+            P1->y -= 14;
+          else
+            P1->jump =false;
+
+          jumpParameter1--;
+            if(jumpParameter1 <= 0)
               P1->jump =false;
         }
         if (P2->jump == true){
-            P2->y -= 20;
+          if(P2->y - 14 >= 0)
+            P2->y -= 14;
+          else
+            P2->jump =false;
+
             jumpParameter2--;
-            if(jumpParameter2 == 0)
+            if(jumpParameter2 <= 0)
               P2->jump =false;
         }
 
-        //This is descend
-        if (P1->jump == false && jumpParameter1 != 5){
-            P1->y += 20;
+        //falling action that follows jump and also check if the player jumped to a platform
+        //in which case stop the falling, and assign variables acordingly
+        if((P1->y + 32) == 150 && P1->x >= 120 && P1->x <= 200){
+          P1->onPlatform = true;
+          P1->falling = false;
+        }
+        else if(P1->jump == false && P1->onPlatform == true ){
+          jumpParameter1 = 6;
+          P1->onPlatform = false;
+          P1-> falling = true;
+        }
+        else if (P1->jump == false && jumpParameter1 != 6){
+            P1->y += 14;
             jumpParameter1++;
         }
-        if (P2->jump == false && jumpParameter2 != 5){
-            P2->y += 20;
+
+        if((P2->y + 32) == 150 && P2->x >= 120 && P2->x <= 200){
+          P2->onPlatform = true;
+          P2->falling = false;
+        }
+        else if(P2->jump == false && P2->onPlatform == true ){
+          jumpParameter2 = 6;
+          P2->onPlatform = false;
+          P2-> falling = true;
+        }
+        else if (P2->jump == false && jumpParameter2 != 6){
+            P2->y += 14;
             jumpParameter2++;
         }
+
+
+        //for the falling action, when a player steps outside of the platform
+        if(P1->falling == true){
+          if(P1->y >= 188){
+            P1->falling = false;
+          }
+          else
+            P1->y += 14;
+        }
+        if(P2->falling == true){
+          if(P2->y >= 188)
+              P2->falling = false;
+          else
+            P2->y += 14;
+        }
+
+
+
         draw_characters(P1,P2);
 
-        // draw_bullet(P1,P2,bullet1,bullet2);
-        // if (bullet_number_P1>0){
-        //   initialize_bullet(bullet1, P1, bullet_number_P1);
-        //   draw_boxes(bullet1, P1, bullet_number_P1);
-        //   get_hitted(bullet1,P2,bullet_number_P1);
-        //   update_bullet(bullet1, P1, bullet_number_P1);
-        // }
-        // if (bullet_number_P2>0){
-        //   initialize_bullet(bullet2,P2,bullet_number_P2);
-        //   draw_boxes(bullet2,P2,bullet_number_P2);
-        //   get_hitted(bullet2,P1,bullet_number_P2);
-        //   update_bullet(bullet2,P2,bullet_number_P2);
-        // }
 
+        //draw_bullet(P1,P2,bullet1,bullet2);
+        if (P1->fire){
+            initialize_bullet(bullet1, P1, bullet_number_P1);
+        }
+        if (P2->fire){
+            initialize_bullet(bullet2,P2,bullet_number_P2);
+        }
+         if (bullet_number_P1>=1){
+           draw_boxes(bullet1, P1, bullet_number_P1);
+           get_hitted(bullet1,P2,bullet_number_P1);
 
+         }
+         if (bullet_number_P2>=1){
+           draw_boxes(bullet2,P2,bullet_number_P2);
+           get_hitted(bullet2,P1,bullet_number_P2);
+         }
         P1->fire = false;
         P2->fire = false;
 
         wait_for_vsync(); // swap front and back buffers on VGA vertical sync
         pixel_buffer_start = *(pixel_ctrl_ptr + 1); // new back buffer
+        clear_boxes(bullet1,P1,bullet_number_P1);
+        clear_boxes(bullet2,P2,bullet_number_P2);
         clear_characters(&prevP1, &prevP2);
     }
 }
@@ -11266,16 +11327,19 @@ int main(void)
 /////////////Implementation/////////////
 void initialize (struct point* P1, struct point* P2){
     P1->x = 64;
-    P1->y = 192;
+    P1->y = 188;
     P2->x = 256;
-    P2->y = 192;
+    P2->y = 188;
     P1->dx = 16;
     P1->dy = 16;
     P2->dx = 16;
     P2->dy = 16;
-    P1->fire_dx=16;
-    P2->fire_dx=16;
-
+    P1->fire_dx=4;
+    P2->fire_dx=4;
+    P1->onPlatform = false;
+    P2->onPlatform = false;
+    P1->falling = false;
+    P2->falling = false;
     P1->face_left=false;
     P1->face_right=true;
     P2->face_right=false;
@@ -11318,7 +11382,20 @@ void draw_characters(struct point* P1, struct point* P2){
     }
   }
 }
-
+void clear_boxes(struct node box[], struct point* P,int number){
+    int width = 2;
+    for (int i = 0; i < number; i++){
+        int x = box[i].x-width;
+        int y = box[i].y-width;
+     for (int i = 0; i <= width; i++) {
+        for (int j = 0; j <= width; j++) {
+            if (x+i>=32&&x+i<=288&&y+j>=32&&y+j<=208&&background[(j+y)*320+(i+x)] == 0xFFFF){
+               plot_pixel(x+i, y+j,background[(j+y)*320+(i+x)]);
+            }
+        }
+      }
+    }
+}
 void clear_characters(struct point* P1, struct point* P2){
     int width = 32;
        int left_corner_x1;
@@ -11331,11 +11408,10 @@ void clear_characters(struct point* P1, struct point* P2){
        left_corner_y2 = P2->y-width;
        for (int i=0;i<64;++i) {
        for (int j=0;j<64;++j) {
-                   plot_pixel(left_corner_x1+i, left_corner_y1+j,background[ (j+ left_corner_y1   ) * 320 + (i+left_corner_x1)]);
+                   plot_pixel(left_corner_x1+i, left_corner_y1+j,background[ (j+ left_corner_y1) * 320 + (i+left_corner_x1)]);
                    plot_pixel(left_corner_x2+i, left_corner_y2+j, background[(j+  left_corner_y2 ) * 320 + (i+left_corner_x2)]);
            }
        }
-
 }
 //Take in player A,B's health and draw the corresponding number of blood on screen
 void drawHeart(int A, int B){
